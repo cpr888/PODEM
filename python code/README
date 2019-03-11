@@ -1,0 +1,5 @@
+To use the mygraph.py in another python file:
+
+from mygraph import G
+
+Now, G would have the details of the Graph
