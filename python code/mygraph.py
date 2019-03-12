@@ -3,14 +3,13 @@ input_list =[]
 output_list=[]
 nodes_list =[]
 edges_list =[]
-dummy_node =[]
 
 output_of_gates =[]
 input_of_gates =[]
 input_of_gates =[]
 input2_of_gates =[]
 #faulty_edge =[sys.argv[1],sys.argv[2],sys.argv[3]]
-faulty_edge =['G1','G8','sa0']  ## INPUT FROM THE USER ,
+faulty_edge =['fanout2','N19','sa0']  ## INPUT FROM THE USER ,
 
 dict_gate_types ={}
 PI= ['PI']
@@ -176,31 +175,38 @@ print "nodes_list",nodes_list
 import networkx as nx 
 G = nx.DiGraph()
 
-G.add_edge(faulty_edge[0],faulty_edge[1], value_non_fault='x',value_faulty='x',fault=faulty_edge[2])
 
 for i in nodes_list:
 	print i
 	if(i in input_list):
-		G.add_node(i,type='input')
+		G.add_node(i,type='input',cc0=1,cc1=1) 
 	elif(i in fanout_dict.values()):
-		G.add_node(i,type='fanout')
+		G.add_node(i,type='fanout',cc0=1,cc1=1)
 	elif(i in output_of_gates):
-		G.add_node(i,type='gate',gatetype=dict_gate_types[i])
+		G.add_node(i,type='gate',gate_type=dict_gate_types[i],cc0=1,cc1=1)
 	elif(i in output_dict.values()):
-		G.add_node(i,type='output')
+		G.add_node(i,type='output',cc0=1,cc1=1)
 	elif(i in 'PI' ):
-		G.add_node('PI',type='check')
+		G.add_node('PI',type='check',cc0=1,cc1=1)
 	
-print G.node 
+print "G.node:","\n",G.node 
 
 
 for i in range(len(edges_list)):
 #	print edges_list[i]
 #	print edges_list[i][0]
 #	print edges_list[i][1]
-	G.add_edge(edges_list[i][0],edges_list[i][1],value_non_fault='x',value_faulty='x', fault='')
+	G.add_edge(edges_list[i][0],edges_list[i][1],value_non_fault='x',value_faulty='x', fault='',CO='x')
+
+G.add_edge(faulty_edge[0],faulty_edge[1], value_non_fault='x',value_faulty='x',fault=faulty_edge[2],CO='x')
 	
-print G.edges	
-	
+print "\n G.edges","\n",G.edges	
+print "\n end"
+list_xy = G.neighbors('output1')
+
+#import matplotlib.pyplot as plt
+#nx.draw_circular(G)
+#nx.draw(G, with_labels=True, font_weight='bold')
+#plt.savefig("samplegraph.png")
 
 
