@@ -3,3 +3,6 @@ To use the mygraph.py in another python file:
 from mygraph import G
 
 Now, G would have the details of the Graph
+@HARSHAL:
+I have added the your Controllability in the file myPODEM.py,
+Currently the Controllability and Observability works(3:00AM,13th Marsh 2019)
